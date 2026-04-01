@@ -1,0 +1,44 @@
+.suggestions-box {
+    width: 300px;
+    background: #1a1a1a;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #333;
+    position: sticky;
+    top: 20px;
+}
+
+.suggested-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.suggested-user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-details {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.follow-btn {
+    background: white;
+    color: black;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.follow-btn:hover { background: #ccc; }

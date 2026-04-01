@@ -1,0 +1,64 @@
+/* Dark Theme UI according to your Screenshot */
+.share-vibe-container {
+    background-color: #121212; /* Dark background */
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #333;
+}
+
+.share-vibe-container h3 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-image-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 0.9rem;
+}
+
+.vibe-textarea {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    resize: none;
+    height: 80px;
+    outline: none;
+}
+
+.vibe-textarea::placeholder {
+    color: #666;
+}
+
+.post-vibe-btn {
+    background-color: #8a2be2; /* Exact Purple from Screenshot */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.post-vibe-btn:hover {
+    background-color: #7b1fa2;
+}

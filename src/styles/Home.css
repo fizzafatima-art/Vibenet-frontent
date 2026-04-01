@@ -1,0 +1,28 @@
+body { margin: 0; font-family: sans-serif; background-color: #000; color: white; }
+.vibenet-layout { display: flex; }
+.main-feed { flex: 1; margin-left: 280px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+.vibenet-header { width: 100%; font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: left; }
+.feed-container { width: 100%; max-width: 500px; margin-top: 20px; }
+.no-vibes-box { 
+    background: #1a1a1a; 
+    border: 1px solid #333; 
+    border-radius: 15px; 
+    padding: 60px 20px; 
+    text-align: center; 
+    color: #4da3ff; 
+}
+.post-item { background: #1a1a1a; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 1px solid #333; }
+.post-user { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.post-user img { width: 30px; height: 30px; border-radius: 50%; }
+.post-img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+.right-bar {
+    width: 350px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Mobile responsive ke liye (optional) */
+@media (max-width: 1000px) {
+    .right-bar { display: none; }
+}
