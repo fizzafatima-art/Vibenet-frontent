@@ -9,97 +9,48 @@ import Register from './pages/Register';
 import './App.css';
 import { io } from "socket.io-client";
 
-// ✅ Initialize socket once
-const socket = io(process.env.REACT_APP_API_URL || 'http://localhost:5000');
+// ✅ Ensure clean API URL
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const socket = io(API_URL);
 
 function App() {
   const [user, setUser] = useState(null);
 
-  // ✅ Load user from localStorage
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user') || 'null');
-    setUser(storedUser);
+    if (storedUser) setUser(storedUser);
   }, []);
 
-  // ✅ Join socket room
   useEffect(() => {
     if (user?._id) {
       socket.emit("join", user._id);
     }
   }, [user]);
 
-  // ✅ Logout
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.clear(); 
     setUser(null);
   };
 
-  // ✅ Delete Account
-  const handleDeleteAccount = async () => {
-    if (window.confirm("Are you sure? Your vibe will be gone forever!")) {
-      try {
-        // TODO: backend API call
-        localStorage.removeItem('user');
-        setUser(null);
-        alert("Account deleted successfully.");
-      } catch (err) {
-        console.log("Delete error:", err);
-      }
-    }
-  };
-
-  // ✅ Layout Wrapper
   const AppLayout = ({ children }) => (
     <div className="main-layout" style={{ display: 'flex' }}>
-      <div style={{ width: '250px' }}>
-        <Sidebar user={user} onLogout={handleLogout} />
-      </div>
-
-      <div style={{ flex: 1 }}>
-        {children}
-      </div>
+      <Sidebar user={user} onLogout={handleLogout} />
+      <div style={{ flex: 1 }}>{children}</div>
     </div>
   );
 
   return (
     <Router>
       <Routes>
-
-        {/* Auth Routes */}
+        {/* Pass setUser to Login to update state immediately */}
         <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/" />} />
         <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
 
-        {/* Protected Routes */}
-        <Route
-          path="/"
-          element={user ? <AppLayout><Home /></AppLayout> : <Navigate to="/login" />}
-        />
-
-        <Route
-          path="/messages"
-          element={user ? <AppLayout><Messages socket={socket} /></AppLayout> : <Navigate to="/login" />}
-        />
-
-        <Route
-          path="/profile"
-          element={
-            user ? (
-              <AppLayout>
-                <Profile
-                  user={user}
-                  onLogout={handleLogout}
-                  onDelete={handleDeleteAccount}
-                />
-              </AppLayout>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-
-        {/* Fallback */}
+        <Route path="/" element={user ? <AppLayout><Home /></AppLayout> : <Navigate to="/login" />} />
+        <Route path="/messages" element={user ? <AppLayout><Messages socket={socket} /></AppLayout> : <Navigate to="/login" />} />
+        <Route path="/profile" element={user ? <AppLayout><Profile user={user} onLogout={handleLogout} /></AppLayout> : <Navigate to="/login" />} />
+        
         <Route path="*" element={<Navigate to="/" />} />
-
       </Routes>
     </Router>
   );
