@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // ✅ Yahan 'Link' add kar diya hai
 import '../styles/Auth.css';
 
-const Login = ({ setUser }) => { // ✅ Fix: setUser prop accept karein
+const Login = ({ setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -14,21 +14,15 @@ const Login = ({ setUser }) => { // ✅ Fix: setUser prop accept karein
             const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
             const res = await axios.post(`${API_BASE}/api/auth/login`, { email, password });
 
-            // ✅ Fix: Token aur User correctly save karein
-            localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
+            localStorage.setItem("token", res.data.token);
             
-            // ✅ Fix: Global state update karein taake reload ki zaroorat na pare
-            setUser(res.data.user);
-
-            alert("Login Successful!");
+            setUser(res.data.user); 
             navigate('/');
         } catch (err) {
-            console.error("Login Error:", err.response?.data);
-            alert(err.response?.data?.message || "Invalid Credentials!");
+            alert(err.response?.data?.message || "Login Failed!");
         }
     };
-
     return (
         <div className="auth-container">
             <form className="auth-form" onSubmit={handleLogin}>

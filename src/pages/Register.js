@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import '../styles/Auth.css';
 
 const Register = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '' });
@@ -10,29 +9,19 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            // ✅ Fix: URL handling ko robust banaya hai
+            // Environment variable se URL uthayega, warna localhost
             const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
             
-            // Log for debugging: Console mein check karein URL kya ban raha hai
-            console.log("Requesting to:", `${API_BASE}/api/auth/register`);
+            const res = await axios.post(`${API_BASE}/api/auth/register`, formData);
 
-            const res = await axios.post(`${API_BASE}/api/auth/register`, {
-                username: formData.username,
-                email: formData.email,
-                password: formData.password
-            });
-
-            // ✅ Fix: Status 200 ya 201 dono success hote hain
             if (res.status === 200 || res.status === 201) {
-                alert("Registration Successful! Please Login.");
+                alert("Registration Successful! Now Login.");
                 navigate('/login');
             }
         } catch (err) {
-            console.error("Signup Error Details:", err.response);
-            
-            // ✅ Fix: Specific error messages from backend
-            const msg = err.response?.data?.message || "Registration Failed! Connection Error.";
-            alert(msg);
+            console.error("Signup Error:", err.response?.data);
+            const errorMsg = err.response?.data?.message || "Connection Error: Check if Backend is up!";
+            alert(errorMsg);
         }
     };
 
